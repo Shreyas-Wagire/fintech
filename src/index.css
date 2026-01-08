@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+    --color-brand-green: #2ecc71;
+    --color-brand-green-dark: #27ae60;
+    --color-brand-gold: #f1c40f;
+    --color-brand-gold-dark: #f39c12;
+    --color-brand-blue: #3498db;
+    --color-brand-red: #e74c3c;
+    --color-off-white: #f8f9fa;
+    --color-dark-text: #2c3e50;
+
+    --animate-bounce-slight: bounce-slight 2s infinite;
+
+    @keyframes bounce-slight {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+}
+
+@layer base {
+    body {
+        @apply bg-off-white text-dark-text font-sans antialiased;
+    }
+}
