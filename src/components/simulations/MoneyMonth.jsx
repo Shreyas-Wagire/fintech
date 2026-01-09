@@ -4,7 +4,7 @@ import { ArrowRight, Wallet, CreditCard, Smartphone, Coins, AlertCircle } from '
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import AIIntroduction from '../ai/AIIntroduction';
-import AILearningSummary from '../ai/AILearningSummary';
+import FinancialAnalysis from '../ai/FinancialAnalysis';
 import { SIMULATOR_CONFIGS } from '../../config/simulatorConfigs';
 
 const FIXED_EXPENSES = [
@@ -28,6 +28,7 @@ export default function MoneyMonth({ onComplete }) {
     const [creditCardBill, setCreditCardBill] = useState(0);
     const [emiPayments, setEmiPayments] = useState([]);
     const [transactions, setTransactions] = useState([]);
+    const [decisions, setDecisions] = useState([]);
     const [startBalance, setStartBalance] = useState(0);
 
     const currentExpense = FIXED_EXPENSES[currentExpenseIndex];
@@ -58,12 +59,28 @@ export default function MoneyMonth({ onComplete }) {
     const handlePayment = (method) => {
         if (!currentExpense) return;
 
+        // Record decision before processing payment
+        const availableOptions = ['Cash', 'UPI', 'Credit Card'];
+        if (currentExpense.emiEligible && currentExpense.cost >= 3000) {
+            availableOptions.push('EMI');
+        }
+
+        const decision = {
+            expense: currentExpense.text,
+            cost: currentExpense.cost,
+            method: method,
+            category: currentExpense.category,
+            balanceBeforePayment: balance,
+            availableOptions
+        };
+
         switch (method) {
             case 'cash':
             case 'upi':
                 if (balance >= currentExpense.cost) {
                     setBalance(prev => prev - currentExpense.cost);
                     recordTransaction(method, currentExpense);
+                    setDecisions(prev => [...prev, decision]);
                     moveToNextExpense();
                 } else {
                     alert('Insufficient balance! Try another payment method.');
@@ -74,6 +91,7 @@ export default function MoneyMonth({ onComplete }) {
             case 'credit':
                 setCreditCardBill(prev => prev + currentExpense.cost);
                 recordTransaction(method, currentExpense);
+                setDecisions(prev => [...prev, decision]);
                 moveToNextExpense();
                 break;
 
@@ -90,6 +108,7 @@ export default function MoneyMonth({ onComplete }) {
                     remaining: 3
                 }]);
                 recordTransaction(method, currentExpense);
+                setDecisions(prev => [...prev, decision]);
                 moveToNextExpense();
                 break;
         }
@@ -301,21 +320,11 @@ export default function MoneyMonth({ onComplete }) {
                 )}
 
                 {step === 'ai-summary' && (
-                    <AILearningSummary
-                        simulationConfig={SIMULATOR_CONFIGS.moneyMonth}
-                        simulationData={{
-                            salary: monthlyIncome,
-                            expenses: transactions.reduce((sum, t) => sum + t.cost, 0),
-                            loanAmount: creditCardBill,
-                            months: 1,
-                            missedPayments: 0,
-                            finalBalance: balance,
-                            eventHistory: transactions.map(t => ({
-                                paid: t.success,
-                                method: t.method,
-                                cost: t.cost
-                            }))
-                        }}
+                    <FinancialAnalysis
+                        startBalance={startBalance}
+                        finalBalance={balance}
+                        decisions={decisions}
+                        totalDebt={creditCardBill + emiPayments.reduce((sum, emi) => sum + (emi.total - emi.monthly), 0)}
                         onContinue={onComplete}
                     />
                 )}

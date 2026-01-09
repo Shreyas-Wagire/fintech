@@ -6,7 +6,7 @@ const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 // Get AI Financial Advisor
 export async function getFinancialAdvice(userContext) {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const prompt = `You are a friendly financial advisor helping a student learn about money management. 
 
@@ -56,7 +56,7 @@ Format as a JSON array of strings: ["tip1", "tip2", "tip3"]`;
 // Get personalized lesson recommendation
 export async function getNextLessonRecommendation(userContext) {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const prompt = `Based on this user's profile, recommend which financial topic they should learn next:
 
@@ -82,7 +82,7 @@ Format: "Topic: [name] - [reason]"`;
 // Smart spending analysis
 export async function analyzeSpending(transactions) {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const recentExpenses = transactions
             .filter(t => t.type === 'DEBIT')
@@ -108,7 +108,7 @@ Focus on spending patterns or areas to improve. Be specific and actionable.`;
 // NEW: Explain a financial term in simple language
 export async function explainFinancialTerm(term) {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const prompt = `Explain the financial term "${term}" to a beginner in 2-3 simple sentences. Use an example with Indian Rupees (₹). Be conversational and clear.`;
 
@@ -124,7 +124,7 @@ export async function explainFinancialTerm(term) {
 // NEW: Pre-lesson introduction with key terms (GENERIC)
 export async function getPreLessonIntro(simulationTitle, terms) {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const termsPrompt = terms.map((t, i) => `${i + 1}. ${t}`).join('\n');
         const prompt = `You're introducing a "${simulationTitle}" lesson to beginners. Explain these ${terms.length} key terms in simple language (1-2 sentences each):
@@ -177,7 +177,7 @@ Format as JSON:
 // NEW: Generate learning summary after simulation (GENERIC)
 export async function generateLearningSummary(simulationTitle, simulationData) {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const prompt = `The user completed a "${simulationTitle}" simulation with these results:
 - Salary: ₹${simulationData.salary.toLocaleString()}/month
@@ -244,7 +244,7 @@ Be specific to their performance. If they had missed payments or negative balanc
 
 // NEW: Analyze user decisions for detailed feedback
 export async function analyzeDecisions(simulationTitle, decisionData) {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `You are a financial advisor analyzing a student's decisions in the "${simulationTitle}" simulation.
 
