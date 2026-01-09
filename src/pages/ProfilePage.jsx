@@ -1,15 +1,24 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Wallet, TrendingUp, TrendingDown, Calendar, Award, Zap, Gem, Heart } from 'lucide-react';
+import { ArrowLeft, Wallet, TrendingUp, TrendingDown, Calendar, Award, Zap, Gem, Heart, LogOut } from 'lucide-react';
 import useStore from '../store/useStore';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import AIAdvisor from '../components/ai/AIAdvisor';
+import { useAuth } from '../context/AuthContext';
 import { cn } from '../lib/utils';
 
 export default function ProfilePage() {
     const navigate = useNavigate();
     const { user, wallet } = useStore();
+    const { currentUser, logout } = useAuth();
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
     // Format date nicely
     const formatDate = (dateString) => {
@@ -33,14 +42,26 @@ export default function ProfilePage() {
     };
 
     return (
-        <div className="min-h-screen bg-off-white pt-20 pb-8 px-4">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 pt-28 pb-28 px-4">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-6">
-                    <button onClick={() => navigate('/')} className="p-2 hover:bg-gray-100 rounded-lg transition">
-                        <ArrowLeft className="w-6 h-6" />
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4">
+                        <button onClick={() => navigate('/')} className="p-2 hover:bg-gray-100 rounded-lg transition">
+                            <ArrowLeft className="w-6 h-6" />
+                        </button>
+                        <div>
+                            <h1 className="text-3xl font-bold">My Profile</h1>
+                            <p className="text-sm text-gray-600 mt-1">Welcome back, {currentUser?.name || user.name}!</p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => setShowLogoutConfirm(true)}
+                        className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-all font-medium"
+                    >
+                        <LogOut className="w-5 h-5" />
+                        <span className="hidden sm:inline">Logout</span>
                     </button>
-                    <h1 className="text-3xl font-bold">My Profile</h1>
                 </div>
 
                 {/* AI Financial Advisor */}
@@ -220,6 +241,41 @@ export default function ProfilePage() {
                     </Button>
                 </div>
             </div>
+
+            {/* Logout Confirmation Modal */}
+            {showLogoutConfirm && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6"
+                    >
+                        <div className="text-center">
+                            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <LogOut className="w-8 h-8 text-red-600" />
+                            </div>
+                            <h3 className="text-2xl font-bold mb-2">Logout?</h3>
+                            <p className="text-gray-600 mb-6">
+                                Are you sure you want to logout? Your progress is saved.
+                            </p>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setShowLogoutConfirm(false)}
+                                    className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-xl font-semibold transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleLogout}
+                                    className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold transition-colors"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
         </div>
     );
 }

@@ -1,24 +1,27 @@
 export const UNITS = [
     {
         id: 1,
-        title: "Unit 1: Money Basics",
-        description: "Start your financial journey here.",
+        title: "Unit 1: Saving Basics",
+        description: "Master money management fundamentals",
         color: "bg-gradient-to-r from-green-500 to-emerald-600",
         levels: [
             { id: 'l1', title: 'Income vs Expense', icon: 'money-bag', totalLessons: 5, completed: 0 },
             { id: 'l2', title: 'Needs vs Wants', icon: 'shopping-cart', totalLessons: 5, completed: 0 },
-            { id: 'l3', title: 'Save Before You Spend', icon: 'piggy-bank', totalLessons: 5, completed: 0 }
+            { id: 'l3', title: 'Save Before You Spend', icon: 'piggy-bank', totalLessons: 5, completed: 0 },
+            { id: 'l11', title: '💳 Payment Methods Explained', icon: 'credit-card', totalLessons: 6, completed: 0 },
+            { id: 'l12', title: '💸 Money Month Simulator', icon: 'game', totalLessons: 1, completed: 0 }
         ]
     },
     {
         id: 2,
-        title: "Unit 2: Banking 101",
-        description: "How banks work for you.",
+        title: "Unit 2: Smart Borrowing",
+        description: "Learn about loans and interest",
         color: "bg-gradient-to-r from-blue-500 to-indigo-600",
         levels: [
             { id: 'l4', title: 'Savings Accounts', icon: 'bank', totalLessons: 4, completed: 0 },
             { id: 'l5', title: 'Understanding Interest', icon: 'percent', totalLessons: 4, completed: 0 },
             { id: 'l6', title: 'Fixed Deposits', icon: 'lock', totalLessons: 4, completed: 0 },
+            { id: 'l16', title: '🏦 Loan & EMI Explained', icon: 'trending-down', totalLessons: 6, completed: 0 },
             { id: 'l10', title: '🎮 Loan Simulator', icon: 'game', totalLessons: 1, completed: 0 }
         ]
     },
@@ -30,19 +33,30 @@ export const UNITS = [
         levels: [
             { id: 'l7', title: 'What is Inflation?', icon: 'trending-up', totalLessons: 4, completed: 0 },
             { id: 'l8', title: 'Risk vs Return', icon: 'activity', totalLessons: 4, completed: 0 },
-            { id: 'l9', title: 'Your First Stock', icon: 'bar-chart', totalLessons: 5, completed: 0 },
-            { id: 'l11', title: '💰 Budget Challenge', icon: 'game', totalLessons: 1, completed: 0 }
+            { id: 'l9', title: 'Your First Stock', icon: 'bar-chart', totalLessons: 5, completed: 0 }
         ]
     },
     {
         id: 4,
-        title: "Unit 4: Smart Financial Habits",
-        description: "Credit cards, taxes, and more!",
+        title: "Unit 4: Taxes & Planning",
+        description: "Master tax-saving strategies",
         color: "bg-gradient-to-r from-orange-500 to-red-600",
         levels: [
-            { id: 'l12', title: 'Credit Cards Basics', icon: 'credit-card', totalLessons: 5, completed: 0 },
-            { id: 'l13', title: 'Understanding Taxes', icon: 'file-text', totalLessons: 4, completed: 0 },
-            { id: 'l14', title: '🧮 Tax Calculator', icon: 'game', totalLessons: 1, completed: 0 }
+            { id: 'l13', title: 'Credit Cards 101', icon: 'credit-card', totalLessons: 4, completed: 0 },
+            { id: 'l17', title: '🧾 Understanding GST', icon: 'receipt', totalLessons: 4, completed: 0 },
+            { id: 'l15', title: '📊 Tax Terms Explained', icon: 'file-text', totalLessons: 7, completed: 0 },
+            { id: 'l14', title: '🧮 Tax Calculator Simulator', icon: 'game', totalLessons: 1, completed: 0 }
+        ]
+    },
+    {
+        id: 5,
+        title: "Unit 5: Stock Market Investing",
+        description: "Learn to trade and build wealth",
+        color: "bg-gradient-to-r from-cyan-500 to-blue-600",
+        levels: [
+            { id: 'l18', title: 'What are Shares?', icon: 'trending-up', totalLessons: 5, completed: 0 },
+            { id: 'l19', title: 'Assets vs Liabilities', icon: 'balance-scale', totalLessons: 4, completed: 0 },
+            { id: 'l20', title: '📈 30-Day Stock Trading Game', icon: 'game', totalLessons: 1, completed: 0 }
         ]
     }
 ];
@@ -342,18 +356,53 @@ export const LESSON_CONTENT = {
         }
     ],
 
-    'l11': [ // Budget Challenge - Pure simulation
+    'l11': [ // Payment Methods Explained
         {
-            id: 'l11-sim',
+            id: 'l11-intro', type: 'explanation', title: 'Payment Methods 💳',
+            content: "There are different ways to pay for things. Each has pros and cons. Let's learn when to use what!"
+        },
+        {
+            id: 'l11-cash', type: 'explanation', title: 'Cash Payment 💵',
+            content: "CASH: Pay with real money. ✅ No interest, immediate. ❌ Limited by what you have."
+        },
+        {
+            id: 'l11-upi', type: 'explanation', title: 'UPI/Digital Payment 📱',
+            content: "UPI (GPay, PhonePe): Digital payment from your bank. ✅ Instant, free. ❌ Limited by bank balance."
+        },
+        {
+            id: 'l11-credit', type: 'explanation', title: 'Credit Card 💳',
+            content: "CREDIT CARD: Borrow money from bank. ✅ Buy now, pay later. ❌ 18% interest if not paid in full!"
+        },
+        {
+            id: 'l11-emi', type: 'explanation', title: 'EMI (Installments) 🔄',
+            content: "EMI: Split big purchases into monthly payments. ✅ Afford expensive items. ❌ 12-18% interest + total cost increases."
+        },
+        {
+            id: 'l11-q1', type: 'quiz', question: 'Which payment method has NO interest?',
+            options: [
+                { text: 'Cash or UPI', correct: true },
+                { text: 'Credit Card', correct: false },
+                { text: 'EMI', correct: false },
+            ]
+        },
+        {
+            id: 'l11-summary', type: 'explanation', title: 'Smart Choice!',
+            content: "Best order: Cash/UPI → Credit Card (pay full) → EMI (if necessary). Avoid interest when possible! 🎯"
+        }
+    ],
+
+    // Money Month Simulation
+    'l12': [
+        {
+            id: 'l12-sim',
             type: 'simulation',
-            simulationType: 'budget',
-            title: '💰 Budget Challenge Game',
+            simulationType: 'moneyMonth',
+            title: '💸 Money Month Challenge',
             config: {}
         }
     ],
 
-    // UNIT 4: Smart Financial Habits
-    'l12': [ // Credit Cards
+    'l13': [ // Taxes
         {
             id: 'l12-intro', type: 'explanation', title: 'What is a Credit Card?',
             content: "A credit card lets you BORROW money from the bank to buy things. But if you don't pay it back in full each month, you pay HUGE interest (18-36%!)! 💳"
@@ -422,6 +471,151 @@ export const LESSON_CONTENT = {
             type: 'simulation',
             simulationType: 'tax',
             title: '🧮 Tax Calculator',
+            config: {}
+        }
+    ],
+
+    'l15': [ // Tax Terms Explained
+        {
+            id: 'l15-intro', type: 'explanation', title: 'Tax Terms Simplified 📊',
+            content: "Taxes can be confusing! Let's learn the key terms you'll hear about income tax."
+        },
+        {
+            id: 'l15-80c', type: 'explanation', title: 'Section 80C 💰',
+            content: "80C: Save tax by investing up to ₹1.5 lakh/year in ELSS, PPF, Life Insurance, or NPS. Example: Invest ₹1.5L → Save ₹46,800 in tax (at 30% rate)!"
+        },
+        {
+            id: 'l15-elss', type: 'explanation', title: 'ELSS (Tax-saving Mutual Fund) 📈',
+            content: "ELSS: Equity Linked Savings Scheme. Invest in stocks via mutual fund. ✅ Tax benefit + market returns. ❌ 3-year lock-in."
+        },
+        {
+            id: 'l15-80d', type: 'explanation', title: 'Section 80D (Health Insurance) 🏥',
+            content: "80D: Deduction for health insurance premium. ₹25,000 for self, ₹50,000 for parents (60+). Get coverage + save tax!"
+        },
+        {
+            id: 'l15-hra', type: 'explanation', title: 'HRA (House Rent Allowance) 🏠',
+            content: "HRA: Part of salary that's tax-free if you pay rent. Can save ₹50,000+ on tax! Metro cities get higher exemption."
+        },
+        {
+            id: 'l15-nps', type: 'explanation', title: 'NPS (Pension Scheme) 🔐',
+            content: "NPS: Extra ₹50,000 deduction under 80CCD(1B). Locked till retirement (age 60). Plan for your future + save tax now!"
+        },
+        {
+            id: 'l15-q1', type: 'quiz', question: 'What is the maximum 80C deduction?',
+            options: [
+                { text: '₹50,000', correct: false },
+                { text: '₹1,50,000', correct: true },
+                { text: '₹5,00,000', correct: false },
+            ]
+        },
+        {
+            id: 'l15-summary', type: 'explanation', title: 'Smart Tax Planning!',
+            content: "Use 80C + 80D + HRA + NPS to reduce taxable income legally. Pay less tax, build wealth! 🎯"
+        }
+    ],
+
+    'l16': [ // Loan & EMI Explained
+        {
+            id: 'l16-intro', type: 'explanation', title: 'Understanding Loans 🏦',
+            content: "A loan is borrowed money you must pay back with INTEREST. Let's understand how it works!"
+        },
+        {
+            id: 'l16-emi', type: 'explanation', title: 'What is EMI? 💳',
+            content: "EMI = Equated Monthly Installment. Instead of paying ₹50,000 at once, pay ₹4,500/month for 12 months. Easier... but costs more!"
+        },
+        {
+            id: 'l16-interest', type: 'explanation', title: 'How Interest Works 📈',
+            content: "Interest = Cost of borrowing. Example: Borrow ₹50,000 at 12% for 1 year →  Pay ₹53,000 total. Interest = ₹3,000 extra!"
+        },
+        {
+            id: 'l16-example', type: 'explanation', title: 'Real Example 🔢',
+            content: "₹50,000 loan at 12% for 12 months:\n- EMI: ₹4,440/month\n- Total paid: ₹53,280\n- Interest cost: ₹3,280\nYou pay 6.5% MORE than the actual price!"
+        },
+        {
+            id: 'l16-hidden', type: 'explanation', title: 'Hidden Charges ⚠️',
+            content: "Watch out for: Processing fee (1-3%), Late payment penalty (₹500-₹1000), Foreclosure charges. Read the fine print!"
+        },
+        {
+            id: 'l16-q1', type: 'quiz', question: 'Higher interest rate means...',
+            options: [
+                { text: 'Lower EMI', correct: false },
+                { text: 'Higher EMI and more total cost', correct: true },
+                { text: 'No difference', correct: false },
+            ]
+        },
+        {
+            id: 'l16-summary', type: 'explanation', title: 'Borrow Smart!',
+            content: "Only take loans for needs, not wants. Compare interest rates. Shorter tenure = less interest. Use our Loan Simulator next! 🎯"
+        }
+    ],
+
+    'l17': [ // Understanding GST
+        {
+            id: 'l17-intro', type: 'explanation', title: 'What is GST? 🧾',
+            content: "GST = Goods and Services Tax. It's a tax you pay when you BUY things (food, clothes, services). Already included in the price!"
+        },
+        {
+            id: 'l17-rate', type: 'explanation', title: 'GST Rates 💰',
+            content: "Different items have different GST rates: 0% (Essential foods), 5% (Daily needs), 12-18% (Most goods), 28% (Luxury items like cars)"
+        },
+        {
+            id: 'l17-example', type: 'explanation', title: 'Example 🔢',
+            content: "₹100 shirt + 18% GST = ₹118 total. The ₹18 goes to government for roads, schools, hospitals!"
+        },
+        {
+            id: 'l17-summary', type: 'explanation', title: 'Remember!',
+            content: "GST is already in the price you see. It funds public services. Higher luxury items have higher GST. 🎯"
+        }
+    ],
+
+    'l18': [ // What are Shares
+        {
+            id: 'l18-intro', type: 'explanation', title: 'What are Shares? 📈',
+            content: "A SHARE = Small piece of a company. Buy Apple shares = Own small part of Apple! If Apple grows, your shares become more valuable!"
+        },
+        {
+            id: 'l18-why', type: 'explanation', title: 'Why Buy Shares? 💰',
+            content: "2 ways to make money: 1) Price goes up → Sell for profit, 2) Dividends → Company shares profits with you"
+        },
+        {
+            id: 'l18-risk', type: 'explanation', title: 'Risk & Reward ⚠️',
+            content: "Shares can go UP or DOWN. High risk = High reward. Never invest money you can't afford to lose!"
+        },
+        {
+            id: 'l18-example', type: 'explanation', title: 'Example 🔢',
+            content: "Buy 10 Apple shares at ₹150 each = ₹1,500. Price rises to ₹180 → Sell = ₹1,800. Profit = ₹300! (20% return)"
+        },
+        {
+            id: 'l18-summary', type: 'explanation', title: 'Smart Investing!',
+            content: "Research before buying. Diversify (don't put all eggs in one basket). Think long-term. Ready to try our simulator? 🎯"
+        }
+    ],
+
+    'l19': [ // Assets vs Liabilities
+        {
+            id: 'l19-intro', type: 'explanation', title: 'Assets vs Liabilities 📊',
+            content: "ASSET = Puts money IN your pocket (stocks, rental property). LIABILITY = Takes money OUT (loans, credit card debt)"
+        },
+        {
+            id: 'l19-assets', type: 'explanation', title: 'Good Assets ✅',
+            content: "Stocks, Mutual Funds, Real Estate (rental), Business, Gold. These GROW your wealth over time!"
+        },
+        {
+            id: 'l19-liabilities', type: 'explanation', title: 'Common Liabilities ❌',
+            content: "Car loans, Credit card debt, Personal loans, EMIs. These DRAIN your wealth with interest!"
+        },
+        {
+            id: 'l19-summary', type: 'explanation', title: 'Wealth Formula!',
+            content: "Rich people buy ASSETS. Poor people buy LIABILITIES. Choose wisely! Build assets, minimize liabilities. 🎯"
+        }
+    ],
+
+    'l20': [ // Stock Trading Simulator
+        {
+            id: 'l20-sim',
+            type: 'simulation',
+            simulationType: 'stockTrading',
+            title: '📈 30-Day Stock Trading Game',
             config: {}
         }
     ]

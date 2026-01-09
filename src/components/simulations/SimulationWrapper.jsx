@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import LoanSimulator from './LoanSimulator';
-import BudgetChallenge from './BudgetChallenge';
 import TaxCalculator from './TaxCalculator';
+import MoneyMonth from './MoneyMonth';
+import StockTrading from './StockTrading';
 import useStore from '../../store/useStore';
 
 export default function SimulationWrapper({ type, config, onComplete }) {
@@ -15,10 +16,12 @@ export default function SimulationWrapper({ type, config, onComplete }) {
     switch (type) {
         case 'loan':
             return <LoanSimulator onComplete={handleComplete} {...config} />;
-        case 'budget':
-            return <BudgetChallenge onComplete={handleComplete} {...config} />;
         case 'tax':
             return <TaxCalculator onComplete={handleComplete} {...config} />;
+        case 'moneyMonth':
+            return <MoneyMonth onComplete={handleComplete} {...config} />;
+        case 'stockTrading':
+            return <StockTrading onComplete={handleComplete} {...config} />;
         default:
             return <div>Unknown simulation type</div>;
     }

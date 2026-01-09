@@ -1,4 +1,8 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import LearnPage from './pages/LearnPage';
 import LessonPage from './pages/LessonPage';
 import SimulatorPage from './pages/SimulatorPage';
@@ -16,6 +20,7 @@ function AppContent() {
   const location = useLocation();
   const isLessonPage = location.pathname.startsWith('/lesson/');
   const isProfilePage = location.pathname === '/profile';
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
 
   // Achievement system
   const { pendingAchievements } = useAchievements();
@@ -23,17 +28,22 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-off-white font-sans text-gray-900">
-      {!isLessonPage && !isProfilePage && <TopBar />}
+      {!isLessonPage && !isProfilePage && !isAuthPage && <TopBar />}
 
       <Routes>
-        <Route path="/" element={<LearnPage />} />
-        <Route path="/simulator" element={<SimulatorPage />} />
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/lesson/:levelId" element={<LessonPage />} />
+        {/* Public Routes */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+
+        {/* Protected Routes */}
+        <Route path="/" element={<ProtectedRoute><LearnPage /></ProtectedRoute>} />
+        <Route path="/simulator" element={<ProtectedRoute><SimulatorPage /></ProtectedRoute>} />
+        <Route path="/leaderboard" element={<ProtectedRoute><LeaderboardPage /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/lesson/:levelId" element={<ProtectedRoute><LessonPage /></ProtectedRoute>} />
       </Routes>
 
-      {!isLessonPage && !isProfilePage && <BottomNav />}
+      {!isLessonPage && !isProfilePage && !isAuthPage && <BottomNav />}
 
       {/* Achievement Modal */}
       {pendingAchievements.length > 0 && (
@@ -49,7 +59,9 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

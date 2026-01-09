@@ -1,12 +1,40 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// Get current user's storage key
+const getStorageKey = () => {
+    const currentUser = localStorage.getItem('fintech-current-user');
+    if (currentUser) {
+        try {
+            const user = JSON.parse(currentUser);
+            return `fintech-storage-${user.id}`;
+        } catch (e) {
+            console.error('Failed to parse current user:', e);
+        }
+    }
+    return 'fintech-storage-guest';
+};
+
+// Get current user's name
+const getCurrentUserName = () => {
+    const currentUser = localStorage.getItem('fintech-current-user');
+    if (currentUser) {
+        try {
+            const user = JSON.parse(currentUser);
+            return user.name || 'Student';
+        } catch (e) {
+            console.error('Failed to parse current user:', e);
+        }
+    }
+    return 'Student';
+};
+
 const useStore = create(
     persist(
         (set, get) => ({
             // User Stats
             user: {
-                name: 'Student',
+                name: getCurrentUserName(),
                 xp: 0,
                 level: 1,
                 streak: 1,
@@ -173,13 +201,15 @@ const useStore = create(
 
             // Lesson unlock logic
             isLessonUnlocked: (lessonId) => {
-                const state = get();
-                if (lessonId === 'l1') return true;
+                // TESTING: All lessons unlocked
+                return true;
 
-                const lessonNum = parseInt(lessonId.substring(1));
-                const prevLessonId = `l${lessonNum - 1}`;
-
-                return state.progress.completedLessons.includes(prevLessonId);
+                // Original logic (commented for testing):
+                // const state = get();
+                // if (lessonId === 'l1') return true;
+                // const lessonNum = parseInt(lessonId.substring(1));
+                // const prevLessonId = `l${lessonNum - 1}`;
+                // return state.progress.completedLessons.includes(prevLessonId);
             },
 
             isLessonCompleted: (lessonId) => {
@@ -343,7 +373,7 @@ const useStore = create(
             }),
         }),
         {
-            name: 'fintech-storage',
+            name: getStorageKey(),
         }
     )
 );

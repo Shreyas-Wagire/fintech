@@ -5,6 +5,9 @@ import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { cn } from '../../lib/utils';
 import useStore from '../../store/useStore';
+import AIIntroduction from '../ai/AIIntroduction';
+import AILearningSummary from '../ai/AILearningSummary';
+import { SIMULATOR_CONFIGS } from '../../config/simulatorConfigs';
 
 const EVENTS = {
     1: [
@@ -22,9 +25,10 @@ const EVENTS = {
 };
 
 export default function BudgetChallenge({ onComplete }) {
-    const { wallet, addMoney, deductMoney } = useStore();
+    // INTERNAL BALANCE - No global wallet!
+    const [balance, setBalance] = useState(25000); // Start with ₹25,000 (salary)
 
-    const [step, setStep] = useState('intro'); // 'intro', 'allocate', 'month', 'result'
+    const [step, setStep] = useState('ai-intro');
     const [budget, setBudget] = useState({
         rent: 8000,
         food: 5000,
@@ -42,7 +46,7 @@ export default function BudgetChallenge({ onComplete }) {
     const totalAllocated = Object.values(budget).reduce((sum, val) => sum + val, 0);
 
     const startChallenge = () => {
-        setSimulationStartBalance(wallet.balance);
+        setSimulationStartBalance(balance);
         setStep('month');
         setCurrentMonth(1);
 
@@ -110,6 +114,14 @@ export default function BudgetChallenge({ onComplete }) {
     return (
         <div className="w-full max-w-2xl mx-auto">
             <AnimatePresence mode="wait">
+                {/* AI Introduction */}
+                {step === 'ai-intro' && (
+                    <AIIntroduction
+                        simulationConfig={SIMULATOR_CONFIGS.budget}
+                        onComplete={() => setStep('intro')}
+                    />
+                )}
+
                 {/* Intro */}
                 {step === 'intro' && (
                     <motion.div
@@ -318,11 +330,28 @@ export default function BudgetChallenge({ onComplete }) {
                             </p>
                         </div>
 
-                        <Button variant="primary" className="w-full" onClick={onComplete}>
-                            Continue Learning
+                        <Button variant="primary" className="w-full" onClick={() => setStep('ai-summary')}>
+                            See AI Learning Summary
                             <ArrowRight className="ml-2" />
                         </Button>
                     </motion.div>
+                )}
+
+                {/* AI Learning Summary */}
+                {step === 'ai-summary' && (
+                    <AILearningSummary
+                        simulationConfig={SIMULATOR_CONFIGS.budget}
+                        simulationData={{
+                            salary: SALARY,
+                            expenses: totalAllocated - budget.savings,
+                            loanAmount: 0, // No loan in budget challenge
+                            months: 3,
+                            missedPayments: 0,
+                            finalBalance: wallet.balance,
+                            eventHistory: decisions.map(d => ({ paid: d.choice === 'Paid' }))
+                        }}
+                        onContinue={onComplete}
+                    />
                 )}
             </AnimatePresence>
         </div>
