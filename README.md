@@ -1,4 +1,4 @@
-# 💰 FinLearn - AI-Powered Financial Literacy Platform
+# 💰 Vyapaar - AI-Powered Financial Literacy Platform
 
 > **Empowering the next generation with financial wisdom through interactive simulations and AI-driven personalized learning**
 
@@ -22,7 +22,7 @@ In India, **financial literacy among students is critically low**. Young adults 
 
 ## 💡 Our Solution
 
-**FinLearn** is an **AI-powered gamified learning platform** that teaches financial concepts through:
+**Vyapaar** is an **AI-powered gamified learning platform** that teaches financial concepts through:
 
 ### 🎮 Interactive Simulations
 Real-world scenarios like managing loans, paying taxes, trading stocks, and budgeting salaries
@@ -234,7 +234,7 @@ export async function getFinancialAdvice(userContext) {
 
 ### Why Gemini Pro?
 
-| Feature | Benefit to FinLearn |
+| Feature | Benefit to Vyapaar |
 |---------|---------------------|
 | **Context-Aware Responses** | Personalized advice based on 6+ user metrics (balance, level, loans, etc.) |
 | **Structured Output** | JSON responses integrate seamlessly with React components |
@@ -371,7 +371,7 @@ fintech/
 - No feedback on user decisions
 - One-size-fits-all curriculum
 
-### FinLearn with Gemini AI ✅
+### Vyapaar with Gemini AI ✅
 - **Personalized coaching** based on user's financial health
 - **Decision-by-decision analysis** with grading and alternatives
 - **Adaptive learning paths** recommending next topics
@@ -517,12 +517,12 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📞 Contact
 
-**Team FinLearn**
+**Team Vyapaar**
 
 - 📧 Email: your.email@example.com
 - 🌐 Website: [finlearn.app](https://finlearn.app)
-- 📱 Twitter: [@FinLearnApp](https://twitter.com/finlearnapp)
-- 💼 LinkedIn: [FinLearn](https://linkedin.com/company/finlearn)
+- 📱 Twitter: [@VyapaarApp](https://twitter.com/vyapaarapp)
+- 💼 LinkedIn: [Vyapaar](https://linkedin.com/company/vyapaar)
 
 ---
 

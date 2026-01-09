@@ -26,7 +26,7 @@ export default function TopBar() {
                             whileTap={{ scale: 0.95 }}
                         >
                             <span className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                                FinLearn
+                                Vyapaar
                             </span>
                         </motion.div>
 
